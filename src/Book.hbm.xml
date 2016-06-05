@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="Ticholas.Bean.Book" table="book">
+        <id name="ISBN" column="isbn" type="java.lang.String">
+        </id>
+        <property name="BookName" column="bookname" not-null="true" type="java.lang.String"/>
+        <property name="Price" column="price" not-null="true" type="java.lang.Float" precision="10" scale="2"/>
+        <property name="stockQuantity" column="stock" not-null="true" type="java.lang.Integer"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="Ticholas.Bean.CustomerInfo" table="user">
+        <id name="userID" column="ID" type="java.lang.Integer">
+        </id>
+        <property name="username" column="username" not-null="true" length="16" type="java.lang.String"/>
+        <property name="gender" column="gender" not-null="false" length="1" type="java.lang.String"/>
+    </class>
+</hibernate-mapping>

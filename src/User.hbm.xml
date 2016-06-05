@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="Ticholas.Bean.User">
+        <id name="userID" column="ID" type="java.lang.Integer">
+            <generator class="increment"/>
+        </id>
+        <property name="username" not-null="true" column="username" length="16" type="java.lang.String"/>
+        <property name="password" not-null="true" column="password" length="128" type="java.lang.String"/>
+    </class>
+</hibernate-mapping>

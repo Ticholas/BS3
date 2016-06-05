@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="Ticholas.Bean.Order">
+        <id name="orderID" column="Order_id" type="java.lang.Integer">
+        </id>
+        <property name="userID" not-null="true" column="ID" type="java.lang.Integer"/>
+        <property name="finished" not-null="true" column="finished" length="1" type="java.lang.String"/>
+        <property name="date" not-null="true" column="date" type="java.util.Date"/>
+    </class>
+</hibernate-mapping>
