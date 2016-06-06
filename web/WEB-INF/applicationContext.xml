@@ -31,6 +31,7 @@
                             <value>Order.hbm.xml</value>
                             <value>CustomerProfile.hbm.xml</value>
                             <value>Item.hbm.xml</value>
+                            <value>BookDetail.hbm.xml</value>
                      </list>
               </property>
               <property name="hibernateProperties">
