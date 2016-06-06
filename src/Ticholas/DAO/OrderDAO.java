@@ -1,5 +1,6 @@
 package Ticholas.DAO;
 
+import Ticholas.Bean.BookInfo;
 import Ticholas.Bean.Order;
 import Ticholas.Bean.OrderItem;
 import Ticholas.Bean.OrderItemID;
@@ -33,6 +34,13 @@ public class OrderDAO {
     public List<Order> findAllOrders(){
         Session session = this.sessionFactory.getCurrentSession();
         String hql = "from Order";
+        List<Order> orders = session.createQuery(hql).list();
+        return orders;
+    }
+
+    public List<Order> findOrderList(int userID){
+        Session session = this.sessionFactory.getCurrentSession();
+        String hql = "from Order where userID = " + userID;
         List<Order> orders = session.createQuery(hql).list();
         return orders;
     }
@@ -89,11 +97,31 @@ public class OrderDAO {
         session.delete(orderItem);
     }
 
-    public List<OrderItem> findAllOrderItems(int orderID){
+    public List<OrderItem> findOrderItemList(int orderID){
         Session session = this.sessionFactory.getCurrentSession();
         String hql = "from OrderItem where OrderItem.orderID = " + orderID;
         List<OrderItem> orderItems = session.createQuery(hql).list();
         return orderItems;
+    }
+
+    public List<OrderItem> findAllOrderItems(){
+        Session session = this.sessionFactory.getCurrentSession();
+        String hql = "from OrderItem";
+        List<OrderItem> orderItems = session.createQuery(hql).list();
+        return orderItems;
+    }
+
+    public List<OrderItem> getShoppingCart(int userID){
+        Session session = this.sessionFactory.getCurrentSession();
+        String hql = "from Order where Order.finished = 'N' and Order.userID = " + userID;
+        Order order = (Order)session.createQuery(hql);
+        List<OrderItem> orderItems = findOrderItemList(order.getOrderID());
+        return orderItems;
+    }
+
+    public void addToCart(BookInfo book,int userID){
+        Session session = this.sessionFactory.getCurrentSession();
+        //..
     }
 
 

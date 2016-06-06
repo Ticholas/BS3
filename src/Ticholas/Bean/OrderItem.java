@@ -3,21 +3,11 @@ package Ticholas.Bean;
 /**
  * Created by HFQ on 2016/5/18.
  */
-public class OrderItem extends Order{
+public class OrderItem{
     protected OrderItemID orderItemID;
     protected int Quantity;
     protected float TotalPrice;
     protected String Bookname;
-
-    @Override
-    public int getUserID() {
-        return super.getUserID();
-    }
-
-    @Override
-    public int getOrderID() {
-        return super.getOrderID();
-    }
 
     public int getQuantity() {
         return Quantity;

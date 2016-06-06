@@ -1,6 +1,7 @@
 package Ticholas.DAO;
 
 import Ticholas.Bean.Book;
+import Ticholas.Bean.BookInfo;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,13 @@ public class BookDAO {
         Book book = null;
         book = (Book)session.get(Book.class, ISBN);
         return book;
+    }
+
+    public BookInfo getBookDetail(String ISBN){
+        Session session = this.sessionFactory.getCurrentSession();
+        String hql = "from BookInfo book where book.ISBN = " + ISBN;
+        BookInfo detail = (BookInfo)(session.createQuery(hql).list().get(0));
+        return detail;
     }
 
 }

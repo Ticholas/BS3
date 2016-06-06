@@ -1,6 +1,7 @@
 package Ticholas.Controller;
 
 import Ticholas.Bean.Book;
+import Ticholas.Bean.BookInfo;
 import Ticholas.Service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,10 +32,8 @@ public class BookController {
 
     @RequestMapping(value = "/create",method = RequestMethod.POST)
     public ModelAndView createBook(@ModelAttribute Book book){
-        ModelAndView modelAndView = new ModelAndView("View/Book/bookList");
+        ModelAndView modelAndView = new ModelAndView("redirect:/Book/list");
         bookService.createBook(book);
-        //String message = "Book add sucessfully!";
-        //modelAndView.addObject("message",message);
         List<?> books = bookService.findAllBooks();
         modelAndView.addObject("books",books);
         return modelAndView;
@@ -58,22 +57,31 @@ public class BookController {
 
     @RequestMapping(value = "/edit/{ISBN}",method = RequestMethod.POST)
     public ModelAndView editBook(@ModelAttribute Book book,@PathVariable String ISBN){
-        ModelAndView modelAndView = new ModelAndView("View/Book/bookList");
+        ModelAndView modelAndView = new ModelAndView("redirect:/Book/list");
         bookService.updateBook(book);
-        List<?> booklist = bookService.findAllBooks();
-        modelAndView.addObject("books",booklist);
+        //List<?> booklist = bookService.findAllBooks();
+        //modelAndView.addObject("books",booklist);
         return modelAndView;
     }
 
     @RequestMapping(value = "/delete/{ISBN}",method = RequestMethod.GET)
     public ModelAndView removeBook(@PathVariable String ISBN){
-        ModelAndView modelAndView = new ModelAndView("View/Book/bookList");
+        ModelAndView modelAndView = new ModelAndView("redirect:/Book/list");
         Book book = bookService.findBookById(ISBN);
         bookService.removeBook(book);
-        List<?> books = bookService.findAllBooks();
-        modelAndView.addObject("books",books);
+        //List<?> books = bookService.findAllBooks();
+        //modelAndView.addObject("books",books);
         return modelAndView;
     }
+
+    @RequestMapping(value = "/detail/{ISBN}",method = RequestMethod.GET)
+    public ModelAndView detailBook(@PathVariable String ISBN){
+        ModelAndView modelAndView = new ModelAndView("View/Book/bookDetail");
+        BookInfo detail = bookService.getBookDetail(ISBN);
+        modelAndView.addObject("detail",detail);
+        return modelAndView;
+    }
+
 
 
 

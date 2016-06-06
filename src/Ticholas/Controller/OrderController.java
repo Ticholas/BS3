@@ -1,6 +1,8 @@
 package Ticholas.Controller;
 
+import Ticholas.Bean.BookInfo;
 import Ticholas.Bean.Order;
+import Ticholas.Bean.OrderItem;
 import Ticholas.Service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,28 +24,18 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @RequestMapping(value = "/create",method = RequestMethod.GET)
-    public ModelAndView createOrderPage(){
-        ModelAndView modelAndView = new ModelAndView("View/Order/orderCreate");
-        modelAndView.addObject("order",new Order());
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/create",method = RequestMethod.POST)
-    public ModelAndView createOrder(@ModelAttribute Order order){
-        ModelAndView modelAndView = new ModelAndView("View/Order/orderList");
-        orderService.createOrder(order);
-        //String message = "Order add sucessfully!";
-        //modelAndView.addObject("message",message);
-        List<?> orders = orderService.findAllOrders();
-        modelAndView.addObject("orders",orders);
-        return modelAndView;
-    }
-
     @RequestMapping(value = "/list",method = RequestMethod.GET)
-    public ModelAndView listOrder(){
+    public ModelAndView listAllOrder(){
         ModelAndView modelAndView = new ModelAndView("View/Order/orderList");
         List<?> orderlist = orderService.findAllOrders();
+        modelAndView.addObject("orders",orderlist);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/list/{userID}",method = RequestMethod.GET)
+    public ModelAndView listOrderList(@PathVariable int userID){
+        ModelAndView modelAndView = new ModelAndView("View/Order/orderList");
+        List<?> orderlist = orderService.findOrderList(userID);
         modelAndView.addObject("orders",orderlist);
         return modelAndView;
     }
@@ -58,7 +50,7 @@ public class OrderController {
 
     @RequestMapping(value = "/edit/{orderID}",method = RequestMethod.POST)
     public ModelAndView editOrder(@ModelAttribute Order order,@PathVariable Integer orderID){
-        ModelAndView modelAndView = new ModelAndView("View/Order/orderList");
+        ModelAndView modelAndView = new ModelAndView("redirect:/Order/list");
         orderService.updateOrder(order);
         List<?> orderlist = orderService.findAllOrders();
         modelAndView.addObject("orders",orderlist);
@@ -67,11 +59,38 @@ public class OrderController {
 
     @RequestMapping(value = "/delete/{orderID}",method = RequestMethod.GET)
     public ModelAndView removeOrder(@PathVariable Integer orderID){
-        ModelAndView modelAndView = new ModelAndView("View/Order/orderList");
+        ModelAndView modelAndView = new ModelAndView("redirect:/Order/list");
         Order order = orderService.findOrderById(orderID);
         orderService.removeOrder(order);
         List<?> orders = orderService.findAllOrders();
         modelAndView.addObject("orders",orders);
         return modelAndView;
     }
+
+    @RequestMapping(value = "/list/{orderID}",method = RequestMethod.GET)
+    public ModelAndView listOrderItem(@PathVariable Integer orderID){
+        ModelAndView modelAndView = new ModelAndView("View/Order/orderItemList");
+        List<OrderItem> orderItems = orderService.findOrderItemList(orderID);
+        modelAndView.addObject("orderItems",orderItems);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/shoppingCart/{userID}",method = RequestMethod.GET)
+    public ModelAndView shoppingCart(@PathVariable Integer userID){
+        ModelAndView modelAndView = new ModelAndView("View/Order/shoppingCart");
+        List<OrderItem> orderItems = orderService.getShoppingCart(userID);
+        modelAndView.addObject("orderItems",orderItems);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/addToCart/{userID}",method = RequestMethod.POST)
+    public ModelAndView addToCart(@ModelAttribute BookInfo bookInfo,@PathVariable Integer userID){
+        ModelAndView modelAndView = new ModelAndView("redirect:/Order/list/" + userID);
+        orderService.addToCart(bookInfo,userID);
+        return modelAndView;
+    }
+
+
+
+
 }

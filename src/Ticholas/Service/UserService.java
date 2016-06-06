@@ -46,4 +46,8 @@ public class UserService {
     public void updateProfile(CustomerInfo customerInfo){
         userDAO.updateProfile(customerInfo);
     }
+
+    public int login(User user){
+        return userDAO.login(user);
+    }
 }

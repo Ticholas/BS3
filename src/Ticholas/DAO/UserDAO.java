@@ -62,4 +62,13 @@ public class UserDAO {
         Session session = this.sessionFactory.getCurrentSession();
         session.update(customerInfo);
     }
+
+    public int login(User user){
+        Session session = this.sessionFactory.getCurrentSession();
+        String hql = "from User user where user.username = "+ user.getUsername();
+        User user1 = (User)(session.createQuery(hql).list().get(0));
+        if(user.getPassword().equals(user1.getPassword()))
+            return user.getUserID();
+        return -1;
+    }
 }
